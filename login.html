@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GustoHub — Student Login</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="login-page min-h-screen">
+  <main class="login-shell">
+    <section class="login-brand-panel">
+      <div class="login-brand">
+        <div class="gk-logo-symbol login-logo-symbol"><i class="fas fa-book-open"></i></div>
+        <div class="gk-wordmark login-wordmark">
+          <span class="gk-wordmark-main">Gusto</span><span class="gk-wordmark-hub">Hub</span>
+        </div>
+      </div>
+
+      <div class="login-brand-copy">
+        <span class="login-eyebrow">STUDENT PORTAL</span>
+        <h1>School life,<br>all in one place.</h1>
+        <p>Access your timetable, learning resources, campus updates, Lost & Found and student support from one simple portal.</p>
+      </div>
+
+      <div class="login-feature-list">
+        <div><i class="fas fa-calendar-check"></i><span>Live timetable & tasks</span></div>
+        <div><i class="fas fa-book-open"></i><span>Academic resources</span></div>
+        <div><i class="fas fa-shield-heart"></i><span>Student support services</span></div>
+      </div>
+    </section>
+
+    <section class="login-card-panel">
+      <div class="login-card">
+        <div class="login-mobile-brand">
+          <div class="gk-logo-symbol"><i class="fas fa-book-open"></i></div>
+          <div class="gk-wordmark"><span class="gk-wordmark-main">Gusto</span><span class="gk-wordmark-hub">Hub</span></div>
+        </div>
+
+        <div class="mb-7">
+          <p class="login-kicker">WELCOME BACK</p>
+          <h2>Sign in to your account</h2>
+          <p class="login-subtitle">Use your student account to continue to the portal.</p>
+        </div>
+
+        <form id="login-form" class="space-y-5" novalidate>
+          <div>
+            <label for="student-id" class="login-label">Student ID or Email</label>
+            <div class="login-input-wrap">
+              <i class="fas fa-user"></i>
+              <input id="student-id" name="studentId" type="text" autocomplete="username" placeholder="e.g. GK001" required>
+            </div>
+          </div>
+
+          <div>
+            <label for="password" class="login-label">Password</label>
+            <div class="login-input-wrap">
+              <i class="fas fa-lock"></i>
+              <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required>
+              <button type="button" id="toggle-password" class="password-toggle" aria-label="Show password">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="login-row">
+            <label class="remember-label">
+              <input id="remember-me" type="checkbox">
+              <span>Remember me</span>
+            </label>
+            <button type="button" id="forgot-password" class="login-text-btn">Forgot password?</button>
+          </div>
+
+          <div id="login-error" class="login-error hidden" role="alert"></div>
+
+          <button type="submit" class="login-submit">
+            <span>Sign In</span>
+            <i class="fas fa-arrow-right"></i>
+          </button>
+        </form>
+
+        <div class="demo-account">
+          <div class="demo-account-title"><i class="fas fa-circle-info"></i> Demo account</div>
+          <div class="demo-account-grid">
+            <div><span>Student ID</span><strong>GK001</strong></div>
+            <div><span>Password</span><strong>student123</strong></div>
+          </div>
+          <button type="button" id="fill-demo" class="demo-fill-btn">Fill demo account</button>
+        </div>
+
+        <p class="login-note">Prototype login only — no database is used in this version.</p>
+      </div>
+    </section>
+  </main>
+
+<script src="js/login.js"></script>
+</body>
+</html>

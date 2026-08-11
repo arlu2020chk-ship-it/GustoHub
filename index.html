@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GustoHub — Dashboard</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+<script src="js/auth.js"></script>
+</head>
+<body class="overflow-x-hidden" data-page="dashboard">
+
+<!-- Split from the original Message 2 prototype. Visual design/content kept intact. -->
+<nav class="glass-nav sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <a href="#" class="flex items-center gap-2.5" onclick="navigate('dashboard');return false;">
+        <div class="gk-logo-symbol" aria-hidden="true">
+          <i class="fas fa-book-open"></i>
+        </div>
+        <span class="gk-wordmark"><span class="gk-wordmark-main">Gusto</span><span class="gk-wordmark-hub">Hub</span></span>
+      </a>
+      <div class="hidden lg:flex items-center gap-1">
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="dashboard" onclick="navigate('dashboard')">Dashboard</button>
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="academic" onclick="navigate('academic')">Academic</button>
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="ai" onclick="navigate('ai')">AI Assistant</button>
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="campus" onclick="navigate('campus')">Campus Life</button>
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="support" onclick="navigate('support')">Support</button>
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="profile" onclick="navigate('profile')">Profile</button>
+      </div>
+      <div class="flex items-center gap-3">
+        <button class="hidden md:flex items-center gap-2 brutal-sm bg-white px-3 py-1.5 text-sm" onclick="openNotifications()">
+          <i class="fas fa-bell"></i>
+          <span class="notification-count bg-[#EC4899] text-white text-xs px-1.5 py-0.5 border-2 border-[#0F172A] font-bold">3</span>
+        </button>
+        <button class="hidden md:flex items-center gap-2 logout-btn px-3 py-2 text-sm font-semibold" onclick="gustoHubLogout()" title="Log out">
+          <i class="fas fa-right-from-bracket"></i>
+          <span>Logout</span>
+        </button>
+        <div class="top-profile-avatar cursor-pointer" onclick="navigate('profile')" title="Profile">
+          <span class="top-profile-initials">ST</span>
+        </div>
+        <button class="lg:hidden brutal-sm bg-[#FCD34D] p-2.5" onclick="toggleMobileNav()" aria-label="menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+    <div id="mobileNav" class="hidden lg:hidden pb-4 space-y-2">
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('dashboard');toggleMobileNav()">Dashboard</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('academic');toggleMobileNav()">Academic Hub</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('ai');toggleMobileNav()">AI Assistant</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('campus');toggleMobileNav()">Campus Life</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('support');toggleMobileNav()">Student Support</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('profile');toggleMobileNav()">Profile</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="gustoHubLogout()">Logout</button>
+    </div>
+  </div>
+</nav>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+<!-- ==================== PAGE 1: DASHBOARD ==================== -->
+<section id="page-dashboard" class="page active">
+  <div class="mb-8">
+    <div class="section-tag mb-3">STUDENT DASHBOARD</div>
+    <h1 class="font-display text-4xl md:text-5xl mb-3">WELCOME TO <span class="text-[#2563EB]">GUSTOHUB</span></h1>
+    <p class="text-base md:text-lg text-[#0F172A]/70 max-w-2xl font-medium">
+      Check today's classes, assignments, learning resources and important Gusto updates from one place.
+    </p>
+    <div class="flex flex-wrap gap-3 mt-6">
+      <button class="pill bg-[#2563EB] text-white px-5 py-3 flex items-center gap-2" onclick="navigate('academic')">
+        <i class="fas fa-book-open"></i> My Modules
+      </button>
+      <button class="pill bg-[#DDF2E7] text-[#0F172A] px-5 py-3 flex items-center gap-2" onclick="document.getElementById('timetable-card').scrollIntoView({behavior:'smooth',block:'center'})">
+        <i class="fas fa-calendar-days"></i> Timetable
+      </button>
+      <button class="pill bg-[#FFF4CC] text-[#0F172A] px-5 py-3 flex items-center gap-2" onclick="navigate('campus')">
+        <i class="fas fa-magnifying-glass"></i> Lost & Found
+      </button>
+    </div>
+  </div>
+
+  <!-- Student overview -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+    <div class="brutal p-5">
+      <div class="flex items-center justify-between mb-2">
+        <span class="font-mono text-xs text-[#0F172A]/60">ATTENDANCE</span>
+        <i class="fas fa-user-check text-[#278455]"></i>
+      </div>
+      <div class="font-display text-4xl text-[#2563EB]">94%</div>
+      <div class="text-xs font-semibold mt-1 text-[#0F172A]/70">Current attendance</div>
+    </div>
+    <div class="brutal p-5">
+      <div class="flex items-center justify-between mb-2">
+        <span class="font-mono text-xs text-[#0F172A]/60">CURRENT MODULES</span>
+        <i class="fas fa-book text-[#2563EB]"></i>
+      </div>
+      <div class="font-display text-4xl">4</div>
+      <div class="text-xs font-semibold mt-1 text-[#0F172A]/70">HND modules</div>
+    </div>
+    <div class="brutal p-5">
+      <div class="flex items-center justify-between mb-2">
+        <span class="font-mono text-xs text-[#0F172A]/60">ASSIGNMENTS DUE</span>
+        <i class="fas fa-file-circle-exclamation text-[#B5475D]"></i>
+      </div>
+      <div class="font-display text-4xl text-[#B5475D]">3</div>
+      <div class="text-xs font-semibold mt-1 text-[#0F172A]/70">Check due dates</div>
+    </div>
+    <div class="brutal p-5">
+      <div class="flex items-center justify-between mb-2">
+        <span class="font-mono text-xs text-[#0F172A]/60">SUBMITTED</span>
+        <i class="fas fa-circle-check text-[#278455]"></i>
+      </div>
+      <div class="font-display text-4xl text-[#278455]">7</div>
+      <div class="text-xs font-semibold mt-1 text-[#0F172A]/70">Assignments completed</div>
+    </div>
+  </div>
+
+  <div class="grid lg:grid-cols-3 gap-6 mb-10">
+    <div class="lg:col-span-2 brutal-lg bg-white p-6 relative" id="timetable-card">
+      <div class="flex items-start justify-between mb-5 flex-wrap gap-3">
+        <div>
+          <div class="section-tag mb-3">LIVE TIMETABLE</div>
+          <h2 class="font-display text-3xl">TODAY'S CLASSES</h2>
+        </div>
+        <div class="flex items-center gap-2">
+          <div id="live-indicator" class="flex items-center gap-2 bg-[#DDF2E7] px-3 py-1.5 rounded-lg">
+            <span id="live-dot" class="w-2.5 h-2.5 bg-[#278455] rounded-full pulse-dot"></span>
+            <span id="live-label" class="font-mono text-xs font-bold uppercase">Live</span>
+          </div>
+          <button class="brutal-sm bg-white px-3 py-1.5 text-xs font-bold" onclick="openTimetableModal()">
+            <i class="fas fa-expand mr-1"></i> Full Timetable
+          </button>
+        </div>
+      </div>
+
+      <div id="class-status-panel" class="border border-[#D8E2EE] rounded-xl p-5 mb-5 relative overflow-hidden">
+        <div class="flex items-start justify-between flex-wrap gap-4 relative">
+          <div class="flex-1 min-w-[200px]">
+            <div id="status-label" class="font-mono text-xs font-bold uppercase text-[#0F172A]/60 mb-2">CURRENT CLASS</div>
+            <div id="class-name" class="font-display text-2xl md:text-3xl text-[#2563EB] mb-1">Software Development Lifecycles</div>
+            <div id="class-meta" class="text-sm font-semibold text-[#0F172A]/70 mb-3">Unit 7 · Tr. Win Sandar · Classroom</div>
+            <div class="flex flex-wrap gap-2">
+              <span id="class-time" class="font-mono text-xs bg-[#0F172A] text-white px-2 py-1 rounded">09:00 - 10:30</span>
+              <span id="class-room" class="font-mono text-xs bg-white border border-[#D8E2EE] px-2 py-1 rounded">Classroom</span>
+            </div>
+          </div>
+          <div class="text-right">
+            <div id="countdown-label" class="font-mono text-xs font-bold uppercase text-[#0F172A]/60 mb-1">ENDS IN</div>
+            <div id="countdown" class="font-display text-4xl md:text-5xl text-[#0F172A]">--:--:--</div>
+            <div id="countdown-sub" class="font-mono text-xs mt-1 text-[#0F172A]/60">calculating...</div>
+          </div>
+        </div>
+        <div id="class-progress" class="mt-4 progress-track"><div id="class-progress-fill" class="progress-fill" style="width:0%"></div></div>
+      </div>
+
+      <div>
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="font-bold text-sm uppercase tracking-wide">Next Classes</h3>
+          <button class="font-mono text-xs underline" onclick="navigate('academic')">Academic Hub →</button>
+        </div>
+        <div id="upcoming-list" class="space-y-2"></div>
+      </div>
+    </div>
+
+    <div class="brutal bg-[#183A57] text-white p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <div class="font-mono text-xs text-[#72D6A4] mb-1">TODAY'S TASKS</div>
+          <h2 class="font-display text-2xl">TO-DO LIST</h2>
+        </div>
+        <button class="bg-white text-[#183A57] w-9 h-9 rounded-lg font-bold text-lg flex items-center justify-center" onclick="openTaskModal()">+</button>
+      </div>
+      <div class="space-y-3" id="tasks-list">
+        <label class="flex items-start gap-3 cursor-pointer group">
+          <input type="checkbox" class="mt-1 w-5 h-5" checked>
+          <div class="flex-1">
+            <div class="font-semibold line-through opacity-50">Upload SDLC presentation</div>
+            <div class="text-xs text-[#72D6A4] font-mono">DONE</div>
+          </div>
+        </label>
+        <label class="flex items-start gap-3 cursor-pointer group">
+          <input type="checkbox" class="mt-1 w-5 h-5">
+          <div class="flex-1">
+            <div class="font-semibold">Check WDD assignment brief</div>
+            <div class="text-xs text-[#F2C94C] font-mono">DUE TODAY</div>
+          </div>
+        </label>
+        <label class="flex items-start gap-3 cursor-pointer group">
+          <input type="checkbox" class="mt-1 w-5 h-5">
+          <div class="flex-1">
+            <div class="font-semibold">Prepare project presentation</div>
+            <div class="text-xs text-[#F2C94C] font-mono">DUE THIS WEEK</div>
+          </div>
+        </label>
+        <label class="flex items-start gap-3 cursor-pointer group">
+          <input type="checkbox" class="mt-1 w-5 h-5">
+          <div class="flex-1">
+            <div class="font-semibold">Download lecture notes</div>
+            <div class="text-xs text-white/60 font-mono">ACADEMIC HUB</div>
+          </div>
+        </label>
+        <label class="flex items-start gap-3 cursor-pointer group">
+          <input type="checkbox" class="mt-1 w-5 h-5">
+          <div class="flex-1">
+            <div class="font-semibold">Check campus announcements</div>
+            <div class="text-xs text-white/60 font-mono">TODAY</div>
+          </div>
+        </label>
+      </div>
+      <div class="mt-5 pt-4 border-t border-white/20">
+        <div class="flex justify-between text-xs font-mono">
+          <span id="task-progress-label" class="text-[#72D6A4]">1 OF 5 DONE</span>
+          <span id="task-progress-percent" class="text-white/60">20% COMPLETE</span>
+        </div>
+        <div class="progress-track mt-2 bg-white/10"><div id="task-progress-fill" class="h-full" style="width:20%"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-6">
+    <div class="flex items-end justify-between flex-wrap gap-3 mb-5">
+      <div>
+        <div class="section-tag mb-3">GUSTO UPDATES</div>
+        <h2 class="font-display text-3xl md:text-4xl">LATEST FROM CAMPUS</h2>
+      </div>
+      <button class="btn-brutal bg-[#2563EB] text-white px-5 py-2.5 text-sm" onclick="navigate('campus')">View All <i class="fas fa-arrow-right ml-1"></i></button>
+    </div>
+    <div class="grid md:grid-cols-3 gap-5">
+      <article class="brutal overflow-hidden cursor-pointer" onclick="openBuzzDetails('HND PROJECT PRESENTATION DAY')">
+        <div class="h-24 bg-[#EAF3FF] flex items-center justify-center"><i class="fas fa-person-chalkboard text-4xl text-[#1E5AA8]"></i></div>
+        <div class="p-4">
+          <div class="text-xs font-bold text-[#1E5AA8] mb-1">EVENT</div>
+          <h3 class="font-display text-lg mb-1">HND PROJECT PRESENTATION DAY</h3>
+          <p class="text-sm text-[#0F172A]/70">Presentation schedule and room information for HND students.</p>
+        </div>
+      </article>
+      <article class="brutal overflow-hidden cursor-pointer" onclick="openBuzzDetails('GUSTO TECH TALK')">
+        <div class="h-24 bg-[#E0F2E8] flex items-center justify-center"><i class="fas fa-microchip text-4xl text-[#278455]"></i></div>
+        <div class="p-4">
+          <div class="text-xs font-bold text-[#278455] mb-1">EVENT</div>
+          <h3 class="font-display text-lg mb-1">GUSTO TECH TALK</h3>
+          <p class="text-sm text-[#0F172A]/70">A short technology sharing session for computing students.</p>
+        </div>
+      </article>
+      <article class="brutal overflow-hidden cursor-pointer" onclick="openBuzzDetails('LMS MAINTENANCE NOTICE')">
+        <div class="h-24 bg-[#FFF2CC] flex items-center justify-center"><i class="fas fa-wifi text-4xl text-[#9A6D00]"></i></div>
+        <div class="p-4">
+          <div class="text-xs font-bold text-[#9A6D00] mb-1">NOTICE</div>
+          <h3 class="font-display text-lg mb-1">LMS MAINTENANCE NOTICE</h3>
+          <p class="text-sm text-[#0F172A]/70">Students are advised to download required files before maintenance.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <div id="urgent-marquee" class="brutal-static bg-white overflow-hidden">
+    <div class="flex items-center">
+      <div class="bg-[#EAF3FF] px-4 py-3 flex items-center gap-2 flex-shrink-0">
+        <i class="fas fa-bullhorn text-[#1E5AA8]"></i>
+        <span class="font-display text-sm text-[#18324A]">ANNOUNCEMENT</span>
+      </div>
+      <div class="overflow-hidden flex-1 py-3">
+        <div class="marquee-content flex gap-12 whitespace-nowrap font-mono text-sm text-[#18324A]">
+          <span>Assignment submission deadlines are available in Academic Hub.</span>
+          <span>Gusto LMS maintenance notice: save or download important files in advance.</span>
+          <span>Check Campus Life for student events and announcements.</span>
+          <span>Assignment submission deadlines are available in Academic Hub.</span>
+          <span>Gusto LMS maintenance notice: save or download important files in advance.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="bg-[#0F172A] text-white mt-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid md:grid-cols-4 gap-8 mb-8">
+      <div>
+        <div class="flex items-center gap-2.5 mb-4">
+          <div class="gk-logo-symbol gk-logo-symbol-footer" aria-hidden="true">
+            <i class="fas fa-book-open"></i>
+          </div>
+          <span class="gk-wordmark gk-wordmark-footer"><span class="gk-wordmark-main">Gusto</span><span class="gk-wordmark-hub">Hub</span></span>
+        </div>
+        <p class="text-sm text-white/60 font-medium">Learning, school updates and student support in one simple place.</p>
+      </div>
+      <div>
+        <div class="font-display text-sm mb-3 text-[#84CC16]">EXPLORE</div>
+        <ul class="space-y-2 text-sm text-white/70">
+          <li><a href="#" onclick="navigate('dashboard');return false;" class="hover:text-[#FCD34D]">Dashboard</a></li>
+          <li><a href="#" onclick="navigate('academic');return false;" class="hover:text-[#FCD34D]">Academic Hub</a></li>
+          <li><a href="#" onclick="navigate('campus');return false;" class="hover:text-[#FCD34D]">Campus Life</a></li>
+          <li><a href="#" onclick="navigate('support');return false;" class="hover:text-[#FCD34D]">Student Support</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="font-display text-sm mb-3 text-[#84CC16]">SUPPORT</div>
+        <ul class="space-y-2 text-sm text-white/70">
+          <li><a href="support.html" class="hover:text-[#FCD34D]">Help Center</a></li>
+          <li><a href="support.html#quick-appointment" class="hover:text-[#FCD34D]">Contact IT</a></li>
+          <li><a href="support.html#quick-appointment" class="hover:text-[#FCD34D]">Report a Bug</a></li>
+          <li><a href="profile.html#settings-panel" class="hover:text-[#FCD34D]">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="font-display text-sm mb-3 text-[#84CC16]">CONNECT</div>
+        <div class="flex gap-2">
+          <a href="https://www.facebook.com/share/1HYTGQx1eL/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="social-link-btn" aria-label="Facebook" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.tiktok.com/@leon0367?_r=1&amp;_t=ZS-98neEgLvcmL" target="_blank" rel="noopener noreferrer" class="social-link-btn" aria-label="TikTok" title="TikTok"><i class="fab fa-tiktok"></i></a>
+          <a href="https://discord.gg/heuKQQhHJ" target="_blank" rel="noopener noreferrer" class="social-link-btn" aria-label="Discord" title="Discord"><i class="fab fa-discord"></i></a>
+          <a href="https://t.me/+2sJLpz_HunYzYjc1" target="_blank" rel="noopener noreferrer" class="social-link-btn" aria-label="Telegram" title="Telegram"><i class="fab fa-telegram-plane"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="pt-6 border-t-2 border-white/20 flex justify-between flex-wrap gap-2 text-xs font-mono text-white/50">
+      <span>© 2026 GUSTOHUB · SCHOOL STUDENT PORTAL</span>
+      <span>v2.4.1 · ALL SYSTEMS OPERATIONAL</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Modal & Toast containers -->
+<div id="modal-root"></div>
+<div id="toast-root" class="fixed top-20 right-4 z-[100] space-y-2 pointer-events-none"></div>
+
+<script src="js/main.js"></script>
+</body>
+</html>

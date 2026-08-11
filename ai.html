@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GustoHub — Lesson Assistant</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+<script src="js/auth.js"></script>
+</head>
+<body class="overflow-x-hidden" data-page="ai">
+
+<!-- Split from the original Message 2 prototype. Visual design/content kept intact. -->
+<nav class="glass-nav sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <a href="#" class="flex items-center gap-2.5" onclick="navigate('dashboard');return false;">
+        <div class="gk-logo-symbol" aria-hidden="true">
+          <i class="fas fa-book-open"></i>
+        </div>
+        <span class="gk-wordmark"><span class="gk-wordmark-main">Gusto</span><span class="gk-wordmark-hub">Hub</span></span>
+      </a>
+      <div class="hidden lg:flex items-center gap-1">
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="dashboard" onclick="navigate('dashboard')">Dashboard</button>
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="academic" onclick="navigate('academic')">Academic</button>
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="ai" onclick="navigate('ai')">AI Assistant</button>
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="campus" onclick="navigate('campus')">Campus Life</button>
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="support" onclick="navigate('support')">Support</button>
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="profile" onclick="navigate('profile')">Profile</button>
+      </div>
+      <div class="flex items-center gap-3">
+        <button class="hidden md:flex items-center gap-2 brutal-sm bg-white px-3 py-1.5 text-sm" onclick="openNotifications()">
+          <i class="fas fa-bell"></i>
+          <span class="notification-count bg-[#EC4899] text-white text-xs px-1.5 py-0.5 border-2 border-[#0F172A] font-bold">3</span>
+        </button>
+        <button class="hidden md:flex items-center gap-2 logout-btn px-3 py-2 text-sm font-semibold" onclick="gustoHubLogout()" title="Log out">
+          <i class="fas fa-right-from-bracket"></i>
+          <span>Logout</span>
+        </button>
+        <div class="top-profile-avatar cursor-pointer" onclick="navigate('profile')" title="Profile">
+          <span class="top-profile-initials">ST</span>
+        </div>
+        <button class="lg:hidden brutal-sm bg-[#FCD34D] p-2.5" onclick="toggleMobileNav()" aria-label="menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+    <div id="mobileNav" class="hidden lg:hidden pb-4 space-y-2">
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('dashboard');toggleMobileNav()">Dashboard</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('academic');toggleMobileNav()">Academic Hub</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('ai');toggleMobileNav()">AI Assistant</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('campus');toggleMobileNav()">Campus Life</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('support');toggleMobileNav()">Student Support</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('profile');toggleMobileNav()">Profile</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="gustoHubLogout()">Logout</button>
+    </div>
+  </div>
+</nav>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+<!-- ==================== PAGE 2: ACADEMIC ==================== -->
+<section id="page-ai" class="page active">
+  <div class="mb-8">
+    <div class="section-tag mb-3">TEACHER-GUIDED LEARNING</div>
+    <div class="flex items-start justify-between gap-4 flex-wrap">
+      <div>
+        <h1 class="font-display text-4xl md:text-5xl mb-3">LESSON ASSISTANT</h1>
+        <p class="text-base md:text-lg text-[#0F172A]/70 max-w-3xl font-medium">
+          Ask questions about the official assignment briefs provided for your four current modules.
+        </p>
+      </div>
+      <div class="ai-safety-badge"><i class="fas fa-shield-halved"></i><span>EXPLAIN ONLY · NO ASSIGNMENT WRITING</span></div>
+    </div>
+  </div>
+
+  <div class="ai-policy-card mb-6">
+    <div class="ai-policy-icon"><i class="fas fa-circle-info"></i></div>
+    <div>
+      <div class="font-bold mb-1">Teacher-guided support</div>
+      <p class="text-sm text-[#0F172A]/70">This assistant explains the selected official assignment brief and its P/M/D criteria, but it will not write or complete assessed work.</p>
+    </div>
+  </div>
+
+  <div class="grid lg:grid-cols-3 gap-6">
+    <aside class="space-y-5">
+      <div class="brutal bg-white p-5">
+        <div class="font-mono text-xs text-[#0F172A]/60 mb-1">STEP 1</div>
+        <h2 class="font-display text-xl mb-4">SELECT ASSIGNMENT BRIEF</h2>
+        <label class="form-label">Module</label>
+        <select id="ai-module" class="w-full mb-4" onchange="updateAIMaterials()">
+          <option value="sdlc">Software Development Lifecycles</option>
+          <option value="pacp">Planning a Computing Project</option>
+          <option value="security">Security</option>
+          <option value="wdd">Website Design &amp; Development</option>
+        </select>
+        <label class="form-label">Official Brief</label>
+        <select id="ai-material" class="w-full mb-4" onchange="updateAIContextCard()"></select>
+        <div id="ai-context-card" class="ai-context-card"></div>
+      </div>
+
+      <div class="brutal bg-white p-5">
+        <div class="font-mono text-xs text-[#0F172A]/60 mb-1">QUICK HELP</div>
+        <h2 class="font-display text-xl mb-4">ASK ABOUT THIS BRIEF</h2>
+        <div class="grid gap-2">
+          <button class="ai-action-btn" onclick="runAIQuickAction('today')"><i class="fas fa-chalkboard-user"></i><span>Explain This Brief</span></button>
+          <button class="ai-action-btn" onclick="runAIQuickAction('summary')"><i class="fas fa-list-check"></i><span>Summarise Requirements</span></button>
+          <button class="ai-action-btn" onclick="runAIQuickAction('brief')"><i class="fas fa-file-circle-question"></i><span>What Does This Brief Ask?</span></button>
+          <button class="ai-action-btn" onclick="runAIQuickAction('criteria')"><i class="fas fa-medal"></i><span>Explain P / M / D Criteria</span></button>
+          <button class="ai-action-btn" onclick="runAIQuickAction('quiz')"><i class="fas fa-circle-question"></i><span>Check My Understanding</span></button>
+        </div>
+      </div>
+    </aside>
+
+    <div class="lg:col-span-2 brutal bg-white overflow-hidden ai-chat-shell">
+      <div class="ai-chat-header">
+        <div><div class="font-mono text-xs text-white/70">GUSTOHUB LEARNING SUPPORT</div><h2 class="font-display text-2xl text-white">Ask the Lesson Assistant</h2></div>
+        <div class="ai-source-mode"><i class="fas fa-lock"></i> Official briefs only</div>
+      </div>
+      <div id="ai-chat-messages" class="ai-chat-messages">
+        <div class="ai-message assistant">
+          <div class="ai-message-avatar"><i class="fas fa-graduation-cap"></i></div>
+          <div class="ai-message-bubble"><p>Hi! Select a module and teacher material, then ask me what you do not understand. I can explain the lesson or brief, but I cannot write your assignment for you.</p><div class="ai-message-source">GustoHub Lesson Assistant</div></div>
+        </div>
+      </div>
+      <form class="ai-chat-input-wrap" onsubmit="submitAIQuestion(event)">
+        <textarea id="ai-question" class="ai-chat-input" rows="2" placeholder="Ask a question about the selected official assignment brief..."></textarea>
+        <button type="submit" class="ai-send-btn"><i class="fas fa-paper-plane"></i><span>Ask</span></button>
+      </form>
+      <div class="ai-chat-footer-note"><i class="fas fa-triangle-exclamation"></i> Prototype answers are restricted to the selected teacher-approved material.</div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="bg-[#0F172A] text-white mt-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid md:grid-cols-4 gap-8 mb-8">
+      <div>
+        <div class="flex items-center gap-2.5 mb-4">
+          <div class="gk-logo-symbol gk-logo-symbol-footer" aria-hidden="true">
+            <i class="fas fa-book-open"></i>
+          </div>
+          <span class="gk-wordmark gk-wordmark-footer"><span class="gk-wordmark-main">Gusto</span><span class="gk-wordmark-hub">Hub</span></span>
+        </div>
+        <p class="text-sm text-white/60 font-medium">Learning, school updates and student support in one simple place.</p>
+      </div>
+      <div>
+        <div class="font-display text-sm mb-3 text-[#84CC16]">EXPLORE</div>
+        <ul class="space-y-2 text-sm text-white/70">
+          <li><a href="#" onclick="navigate('dashboard');return false;" class="hover:text-[#FCD34D]">Dashboard</a></li>
+          <li><a href="#" onclick="navigate('academic');return false;" class="hover:text-[#FCD34D]">Academic Hub</a></li>
+          <li><a href="#" onclick="navigate('campus');return false;" class="hover:text-[#FCD34D]">Campus Life</a></li>
+          <li><a href="#" onclick="navigate('support');return false;" class="hover:text-[#FCD34D]">Student Support</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="font-display text-sm mb-3 text-[#84CC16]">SUPPORT</div>
+        <ul class="space-y-2 text-sm text-white/70">
+          <li><a href="support.html" class="hover:text-[#FCD34D]">Help Center</a></li>
+          <li><a href="support.html#quick-appointment" class="hover:text-[#FCD34D]">Contact IT</a></li>
+          <li><a href="support.html#quick-appointment" class="hover:text-[#FCD34D]">Report a Bug</a></li>
+          <li><a href="profile.html#settings-panel" class="hover:text-[#FCD34D]">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="font-display text-sm mb-3 text-[#84CC16]">CONNECT</div>
+        <div class="flex gap-2">
+          <a href="https://www.facebook.com/share/1HYTGQx1eL/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="social-link-btn" aria-label="Facebook" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.tiktok.com/@leon0367?_r=1&amp;_t=ZS-98neEgLvcmL" target="_blank" rel="noopener noreferrer" class="social-link-btn" aria-label="TikTok" title="TikTok"><i class="fab fa-tiktok"></i></a>
+          <a href="https://discord.gg/heuKQQhHJ" target="_blank" rel="noopener noreferrer" class="social-link-btn" aria-label="Discord" title="Discord"><i class="fab fa-discord"></i></a>
+          <a href="https://t.me/+2sJLpz_HunYzYjc1" target="_blank" rel="noopener noreferrer" class="social-link-btn" aria-label="Telegram" title="Telegram"><i class="fab fa-telegram-plane"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="pt-6 border-t-2 border-white/20 flex justify-between flex-wrap gap-2 text-xs font-mono text-white/50">
+      <span>© 2026 GUSTOHUB · SCHOOL STUDENT PORTAL</span>
+      <span>v2.4.1 · ALL SYSTEMS OPERATIONAL</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Modal & Toast containers -->
+<div id="modal-root"></div>
+<div id="toast-root" class="fixed top-20 right-4 z-[100] space-y-2 pointer-events-none"></div>
+
+<script src="js/main.js"></script>
+</body>
+</html>

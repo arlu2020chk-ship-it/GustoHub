@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GustoHub — Academic Hub</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+<script src="js/auth.js"></script>
+</head>
+<body class="overflow-x-hidden" data-page="academic">
+
+<!-- Split from the original Message 2 prototype. Visual design/content kept intact. -->
+<nav class="glass-nav sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <a href="#" class="flex items-center gap-2.5" onclick="navigate('dashboard');return false;">
+        <div class="gk-logo-symbol" aria-hidden="true">
+          <i class="fas fa-book-open"></i>
+        </div>
+        <span class="gk-wordmark"><span class="gk-wordmark-main">Gusto</span><span class="gk-wordmark-hub">Hub</span></span>
+      </a>
+      <div class="hidden lg:flex items-center gap-1">
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="dashboard" onclick="navigate('dashboard')">Dashboard</button>
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="academic" onclick="navigate('academic')">Academic</button>
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="ai" onclick="navigate('ai')">AI Assistant</button>
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="campus" onclick="navigate('campus')">Campus Life</button>
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="support" onclick="navigate('support')">Support</button>
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="profile" onclick="navigate('profile')">Profile</button>
+      </div>
+      <div class="flex items-center gap-3">
+        <button class="hidden md:flex items-center gap-2 brutal-sm bg-white px-3 py-1.5 text-sm" onclick="openNotifications()">
+          <i class="fas fa-bell"></i>
+          <span class="notification-count bg-[#EC4899] text-white text-xs px-1.5 py-0.5 border-2 border-[#0F172A] font-bold">3</span>
+        </button>
+        <button class="hidden md:flex items-center gap-2 logout-btn px-3 py-2 text-sm font-semibold" onclick="gustoHubLogout()" title="Log out">
+          <i class="fas fa-right-from-bracket"></i>
+          <span>Logout</span>
+        </button>
+        <div class="top-profile-avatar cursor-pointer" onclick="navigate('profile')" title="Profile">
+          <span class="top-profile-initials">ST</span>
+        </div>
+        <button class="lg:hidden brutal-sm bg-[#FCD34D] p-2.5" onclick="toggleMobileNav()" aria-label="menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+    <div id="mobileNav" class="hidden lg:hidden pb-4 space-y-2">
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('dashboard');toggleMobileNav()">Dashboard</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('academic');toggleMobileNav()">Academic Hub</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('ai');toggleMobileNav()">AI Assistant</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('campus');toggleMobileNav()">Campus Life</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('support');toggleMobileNav()">Student Support</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('profile');toggleMobileNav()">Profile</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="gustoHubLogout()">Logout</button>
+    </div>
+  </div>
+</nav>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+<!-- ==================== PAGE 2: ACADEMIC ==================== -->
+<section id="page-academic" class="page active">
+  <div class="mb-8">
+    <div class="section-tag mb-3">ACADEMIC HUB</div>
+    <h1 class="font-display text-4xl md:text-5xl mb-3">MY ACADEMIC</h1>
+    <p class="text-base md:text-lg text-[#0F172A]/70 max-w-3xl font-medium">
+      Access your HND modules, Gusto learning materials, assignment briefs, submission status and P / M / D results.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+    <div class="brutal p-5">
+      <div class="font-mono text-xs text-[#0F172A]/60">CURRENT MODULES</div>
+      <div class="font-display text-3xl mt-2 text-[#1E5AA8]">4</div>
+      <div class="text-xs text-[#0F172A]/60 mt-1">HND in Computing</div>
+    </div>
+    <div class="brutal p-5">
+      <div class="font-mono text-xs text-[#0F172A]/60">ATTENDANCE</div>
+      <div class="font-display text-3xl mt-2 text-[#278455]">94%</div>
+      <div class="text-xs text-[#0F172A]/60 mt-1">Current attendance</div>
+    </div>
+    <div class="brutal p-5">
+      <div class="font-mono text-xs text-[#0F172A]/60">ASSIGNMENTS DUE</div>
+      <div class="font-display text-3xl mt-2 text-[#B5475D]">3</div>
+      <div class="text-xs text-[#0F172A]/60 mt-1">Upcoming deadlines</div>
+    </div>
+    <div class="brutal p-5">
+      <div class="font-mono text-xs text-[#0F172A]/60">SUBMITTED</div>
+      <div class="font-display text-3xl mt-2">7</div>
+      <div class="text-xs text-[#0F172A]/60 mt-1">Assignments completed</div>
+    </div>
+  </div>
+
+  <div class="flex flex-wrap gap-2 mb-6" id="module-filters">
+    <button class="filter-tag active px-4 py-2" data-module-filter="all">All Modules</button>
+    <button class="filter-tag px-4 py-2" data-module-filter="current">Current</button>
+    <button class="filter-tag px-4 py-2" data-module-filter="due">Assignments Due</button>
+    <button class="filter-tag px-4 py-2" data-module-filter="completed">Completed</button>
+  </div>
+
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-10" id="modules-grid"></div>
+
+  <div id="learning-materials-section" class="brutal-static bg-white p-6 mb-10">
+    <div class="flex items-end justify-between gap-3 flex-wrap mb-5">
+      <div>
+        <div class="section-tag mb-3">LEARNING MATERIALS</div>
+        <h2 class="font-display text-3xl">OFFICIAL ASSIGNMENT BRIEFS</h2>
+        <p class="text-sm text-[#0F172A]/60 mt-1">Real assignment briefs for the four current HND modules.</p>
+      </div>
+      <button class="btn-brutal bg-[#1E5AA8] text-white px-4 py-2.5 text-sm" onclick="openMaterialsModal()">
+        <i class="fas fa-folder-open mr-1"></i> Browse All
+      </button>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+      <button class="resource-card text-left" onclick="openRealBrief('SDLC_Assignment_1_Brief_HND69.pdf')">
+        <div class="resource-icon pdf"><i class="fas fa-file-pdf"></i></div>
+        <div>
+          <div class="font-bold text-sm">SDLC Assignment 1</div>
+          <div class="text-xs text-[#0F172A]/50">Software Development Lifecycles · Tr. Win Sandar, Yi Yi Aung</div>
+        </div>
+      </button>
+      <button class="resource-card text-left" onclick="openRealBrief('SDLC_Assignment_2_Brief_HND69.pdf')">
+        <div class="resource-icon pdf"><i class="fas fa-file-pdf"></i></div>
+        <div>
+          <div class="font-bold text-sm">SDLC Assignment 2</div>
+          <div class="text-xs text-[#0F172A]/50">Software Development Lifecycles · Tr. Win Sandar, Yi Yi Aung</div>
+        </div>
+      </button>
+      <button class="resource-card text-left" onclick="openRealBrief('PACP_Assignment_Brief_HND69.pdf')">
+        <div class="resource-icon pdf"><i class="fas fa-file-pdf"></i></div>
+        <div>
+          <div class="font-bold text-sm">Planning a Computing Project Assignment Brief</div>
+          <div class="text-xs text-[#0F172A]/50">Planning a Computing Project · Tr. Thiri Win</div>
+        </div>
+      </button>
+      <button class="resource-card text-left" onclick="openRealBrief('Security_Assignment_Brief_HND69.pdf')">
+        <div class="resource-icon pdf"><i class="fas fa-file-pdf"></i></div>
+        <div>
+          <div class="font-bold text-sm">Security Assignment</div>
+          <div class="text-xs text-[#0F172A]/50">Security · Sir. Aung Bo Bo Kyaw</div>
+        </div>
+      </button>
+      <button class="resource-card text-left" onclick="openRealBrief('WDD_Assignment_1_Brief_HND69.pdf')">
+        <div class="resource-icon pdf"><i class="fas fa-file-pdf"></i></div>
+        <div>
+          <div class="font-bold text-sm">Website Design & Development Assignment 1</div>
+          <div class="text-xs text-[#0F172A]/50">Website Design & Development · Tr. Ei Po Po Aung</div>
+        </div>
+      </button>
+      <button class="resource-card text-left" onclick="openRealBrief('WDD_Assignment_2_Brief_HND69.pdf')">
+        <div class="resource-icon pdf"><i class="fas fa-file-pdf"></i></div>
+        <div>
+          <div class="font-bold text-sm">Website Design & Development Assignment 2</div>
+          <div class="text-xs text-[#0F172A]/50">Website Design & Development · Tr. Ei Po Po Aung</div>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <div id="assignment-submission-section" class="mb-10">
+    <div class="flex items-end justify-between gap-3 flex-wrap mb-5">
+      <div>
+        <div class="section-tag mb-3">ASSIGNMENT SUBMISSION</div>
+        <h2 class="font-display text-3xl">MY ASSIGNMENTS</h2>
+        <p class="text-sm text-[#0F172A]/60 mt-1">View briefs, upload your files and check submission status.</p>
+      </div>
+      <div class="grade-legend">
+        <span class="grade-chip grade-p">P · Pass</span>
+        <span class="grade-chip grade-m">M · Merit</span>
+        <span class="grade-chip grade-d">D · Distinction</span>
+      </div>
+    </div>
+    <div class="grid md:grid-cols-2 gap-5" id="assignment-submission-grid"></div>
+  </div>
+
+  <div class="grid lg:grid-cols-3 gap-6 mb-8">
+    <div class="lg:col-span-2 brutal bg-white p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <div class="font-mono text-xs text-[#0F172A]/60">UPCOMING DEADLINES</div>
+          <h2 class="font-display text-2xl mt-1">DUE SOON</h2>
+        </div>
+        <button class="text-sm font-bold text-[#1E5AA8]" onclick="openAssignmentCalendar()">View Calendar →</button>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm min-w-[620px]">
+          <thead>
+            <tr class="text-xs text-[#0F172A]/50 uppercase">
+              <th class="py-3">Assignment</th>
+              <th class="py-3">Module</th>
+              <th class="py-3">Due</th>
+              <th class="py-3">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="py-3 font-semibold">Assignment 1 Report</td><td>Software Development Lifecycles</td><td>18 Aug 2026</td><td><span class="status-pill status-due">Due Soon</span></td></tr>
+            <tr><td class="py-3 font-semibold">Website Development Report</td><td>Website Design & Development</td><td>22 Aug 2026</td><td><span class="status-pill status-progress">In Progress</span></td></tr>
+            <tr><td class="py-3 font-semibold">Project Presentation</td><td>Planning a Computing Project</td><td>26 Aug 2026</td><td><span class="status-pill status-pending">Not Submitted</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="brutal bg-[#183A57] text-white p-6" id="results-summary-card">
+      <div class="font-mono text-xs text-[#72D6A4]">RESULTS SUMMARY</div>
+      <h2 class="font-display text-3xl mt-1 mb-5 pmd-heading">
+        <span class="pmd-p">P</span>
+        <span class="pmd-slash">/</span>
+        <span class="pmd-m">M</span>
+        <span class="pmd-slash">/</span>
+        <span class="pmd-d">D</span>
+      </h2>
+      <div class="space-y-4">
+        <div class="result-row"><span>Pass</span><strong id="result-pass">1</strong></div>
+        <div class="result-row"><span>Merit</span><strong id="result-merit">1</strong></div>
+        <div class="result-row"><span>Distinction</span><strong id="result-distinction">1</strong></div>
+        <div class="result-row"><span>Pending</span><strong id="result-pending">1</strong></div>
+      </div>
+      <p class="text-xs text-white/60 mt-5">HND assignment outcomes are shown using Pass, Merit and Distinction.</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="bg-[#0F172A] text-white mt-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid md:grid-cols-4 gap-8 mb-8">
+      <div>
+        <div class="flex items-center gap-2.5 mb-4">
+          <div class="gk-logo-symbol gk-logo-symbol-footer" aria-hidden="true">
+            <i class="fas fa-book-open"></i>
+          </div>
+          <span class="gk-wordmark gk-wordmark-footer"><span class="gk-wordmark-main">Gusto</span><span class="gk-wordmark-hub">Hub</span></span>
+        </div>
+        <p class="text-sm text-white/60 font-medium">Learning, school updates and student support in one simple place.</p>
+      </div>
+      <div>
+        <div class="font-display text-sm mb-3 text-[#84CC16]">EXPLORE</div>
+        <ul class="space-y-2 text-sm text-white/70">
+          <li><a href="#" onclick="navigate('dashboard');return false;" class="hover:text-[#FCD34D]">Dashboard</a></li>
+          <li><a href="#" onclick="navigate('academic');return false;" class="hover:text-[#FCD34D]">Academic Hub</a></li>
+          <li><a href="#" onclick="navigate('campus');return false;" class="hover:text-[#FCD34D]">Campus Life</a></li>
+          <li><a href="#" onclick="navigate('support');return false;" class="hover:text-[#FCD34D]">Student Support</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="font-display text-sm mb-3 text-[#84CC16]">SUPPORT</div>
+        <ul class="space-y-2 text-sm text-white/70">
+          <li><a href="support.html" class="hover:text-[#FCD34D]">Help Center</a></li>
+          <li><a href="support.html#quick-appointment" class="hover:text-[#FCD34D]">Contact IT</a></li>
+          <li><a href="support.html#quick-appointment" class="hover:text-[#FCD34D]">Report a Bug</a></li>
+          <li><a href="profile.html#settings-panel" class="hover:text-[#FCD34D]">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="font-display text-sm mb-3 text-[#84CC16]">CONNECT</div>
+        <div class="flex gap-2">
+          <a href="https://www.facebook.com/share/1HYTGQx1eL/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="social-link-btn" aria-label="Facebook" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.tiktok.com/@leon0367?_r=1&amp;_t=ZS-98neEgLvcmL" target="_blank" rel="noopener noreferrer" class="social-link-btn" aria-label="TikTok" title="TikTok"><i class="fab fa-tiktok"></i></a>
+          <a href="https://discord.gg/heuKQQhHJ" target="_blank" rel="noopener noreferrer" class="social-link-btn" aria-label="Discord" title="Discord"><i class="fab fa-discord"></i></a>
+          <a href="https://t.me/+2sJLpz_HunYzYjc1" target="_blank" rel="noopener noreferrer" class="social-link-btn" aria-label="Telegram" title="Telegram"><i class="fab fa-telegram-plane"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="pt-6 border-t-2 border-white/20 flex justify-between flex-wrap gap-2 text-xs font-mono text-white/50">
+      <span>© 2026 GUSTOHUB · SCHOOL STUDENT PORTAL</span>
+      <span>v2.4.1 · ALL SYSTEMS OPERATIONAL</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Modal & Toast containers -->
+<div id="modal-root"></div>
+<div id="toast-root" class="fixed top-20 right-4 z-[100] space-y-2 pointer-events-none"></div>
+
+<script src="js/main.js"></script>
+</body>
+</html>

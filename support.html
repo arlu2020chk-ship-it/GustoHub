@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GustoHub — Student Support</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+<script src="js/auth.js"></script>
+</head>
+<body class="overflow-x-hidden" data-page="support">
+
+<!-- Split from the original Message 2 prototype. Visual design/content kept intact. -->
+<nav class="glass-nav sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <a href="#" class="flex items-center gap-2.5" onclick="navigate('dashboard');return false;">
+        <div class="gk-logo-symbol" aria-hidden="true">
+          <i class="fas fa-book-open"></i>
+        </div>
+        <span class="gk-wordmark"><span class="gk-wordmark-main">Gusto</span><span class="gk-wordmark-hub">Hub</span></span>
+      </a>
+      <div class="hidden lg:flex items-center gap-1">
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="dashboard" onclick="navigate('dashboard')">Dashboard</button>
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="academic" onclick="navigate('academic')">Academic</button>
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="ai" onclick="navigate('ai')">AI Assistant</button>
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="campus" onclick="navigate('campus')">Campus Life</button>
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="support" onclick="navigate('support')">Support</button>
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="profile" onclick="navigate('profile')">Profile</button>
+      </div>
+      <div class="flex items-center gap-3">
+        <button class="hidden md:flex items-center gap-2 brutal-sm bg-white px-3 py-1.5 text-sm" onclick="openNotifications()">
+          <i class="fas fa-bell"></i>
+          <span class="notification-count bg-[#EC4899] text-white text-xs px-1.5 py-0.5 border-2 border-[#0F172A] font-bold">3</span>
+        </button>
+        <button class="hidden md:flex items-center gap-2 logout-btn px-3 py-2 text-sm font-semibold" onclick="gustoHubLogout()" title="Log out">
+          <i class="fas fa-right-from-bracket"></i>
+          <span>Logout</span>
+        </button>
+        <div class="top-profile-avatar cursor-pointer" onclick="navigate('profile')" title="Profile">
+          <span class="top-profile-initials">ST</span>
+        </div>
+        <button class="lg:hidden brutal-sm bg-[#FCD34D] p-2.5" onclick="toggleMobileNav()" aria-label="menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+    <div id="mobileNav" class="hidden lg:hidden pb-4 space-y-2">
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('dashboard');toggleMobileNav()">Dashboard</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('academic');toggleMobileNav()">Academic Hub</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('ai');toggleMobileNav()">AI Assistant</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('campus');toggleMobileNav()">Campus Life</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('support');toggleMobileNav()">Student Support</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('profile');toggleMobileNav()">Profile</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="gustoHubLogout()">Logout</button>
+    </div>
+  </div>
+</nav>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+<!-- ==================== PAGE 4: STUDENT SUPPORT ==================== -->
+<section id="page-support" class="page active">
+  <div class="mb-8">
+    <div class="section-tag mb-3">STUDENT SUPPORT</div>
+    <h1 class="font-display text-4xl md:text-5xl mb-3">HOW CAN WE HELP?</h1>
+    <p class="text-base md:text-lg text-[#0F172A]/70 max-w-3xl font-medium">
+      Get help with academics, Gusto LMS, IT issues, library resources and general student enquiries.
+    </p>
+  </div>
+
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-10" id="services-grid"></div>
+
+  <div class="grid lg:grid-cols-2 gap-6">
+    <div id="quick-appointment" class="brutal bg-[#1E5AA8] text-white p-6">
+      <div class="font-mono text-xs text-white/70 mb-1">REQUEST SUPPORT</div>
+      <h2 class="font-display text-3xl mb-5">BOOK A SLOT</h2>
+      <div class="space-y-4">
+        <div>
+          <label class="text-xs font-bold block mb-2">Service</label>
+          <select id="appointment-service" class="w-full bg-white text-[#0F172A] px-3 py-2.5 font-bold">
+            <option>Academic Support</option>
+            <option>IT Help Desk</option>
+            <option>Student Services</option>
+            <option>Library Support</option>
+            <option>Assignment / LMS Support</option>
+            <option>General Enquiries</option>
+          </select>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-3">
+          <div>
+            <label class="text-xs font-bold block mb-2">Date</label>
+            <input id="appointment-date" type="date" class="w-full bg-white text-[#0F172A] px-3 py-2.5 font-bold">
+          </div>
+          <div>
+            <label class="text-xs font-bold block mb-2">Time</label>
+            <select id="appointment-time" class="w-full bg-white text-[#0F172A] px-3 py-2.5 font-bold">
+              <option>09:00 AM</option><option>10:00 AM</option><option>11:00 AM</option>
+              <option>01:00 PM</option><option>02:00 PM</option><option>03:00 PM</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="text-xs font-bold block mb-2">What do you need help with?</label>
+          <textarea id="appointment-notes" class="w-full bg-white text-[#0F172A] px-3 py-2.5 h-24 resize-none" placeholder="Write a short note..."></textarea>
+        </div>
+        <button type="button" class="btn-brutal bg-white text-[#1E5AA8] w-full py-3" onclick="submitAppointment()">Request Support</button>
+      </div>
+    </div>
+
+    <div class="brutal bg-white p-6">
+      <div class="font-mono text-xs text-[#0F172A]/60 mb-1">FREQUENTLY ASKED</div>
+      <h2 class="font-display text-3xl mb-5">QUICK ANSWERS</h2>
+      <div class="space-y-3">
+        <div class="faq-item border border-[#D8E2EE] rounded-xl overflow-hidden">
+          <button aria-expanded="false" class="w-full text-left p-4 flex justify-between items-center font-bold" onclick="toggleFAQ(this)">
+            How do I reset my Gusto LMS password? <i class="fas fa-plus"></i>
+          </button>
+          <div class="faq-answer hidden px-4 pb-4 text-sm text-[#0F172A]/70">
+            <div class="faq-help-box">
+              <strong>Steps:</strong>
+              <ol>
+                <li>Select <b>IT Help Desk</b> from the support services.</li>
+                <li>Choose a date and time in <b>Book a Slot</b>.</li>
+                <li>Write that you need help resetting your Gusto LMS password.</li>
+                <li>Select <b>Request Support</b>.</li>
+              </ol>
+              <button class="faq-go-btn" onclick="selectSupportService('IT Help Desk')">
+                Go to IT Help Desk <i class="fas fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item border border-[#D8E2EE] rounded-xl overflow-hidden">
+          <button aria-expanded="false" class="w-full text-left p-4 flex justify-between items-center font-bold" onclick="toggleFAQ(this)">
+            Where can I find assignment briefs? <i class="fas fa-plus"></i>
+          </button>
+          <div class="faq-answer hidden px-4 pb-4 text-sm text-[#0F172A]/70">
+            <div class="faq-help-box">
+              <strong>Steps:</strong>
+              <ol>
+                <li>Open <b>Academic Hub</b>.</li>
+                <li>Go to <b>Learning Materials</b> or <b>My Assignments</b>.</li>
+                <li>Select <b>View Brief</b> beside the assignment you need.</li>
+                <li>The PDF brief will open or download for you to read.</li>
+              </ol>
+              <button class="faq-go-btn" onclick="navigateToTarget('academic','assignment-submission-section')">
+                Go to My Assignments <i class="fas fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item border border-[#D8E2EE] rounded-xl overflow-hidden">
+          <button aria-expanded="false" class="w-full text-left p-4 flex justify-between items-center font-bold" onclick="toggleFAQ(this)">
+            How do I report a lost or found item? <i class="fas fa-plus"></i>
+          </button>
+          <div class="faq-answer hidden px-4 pb-4 text-sm text-[#0F172A]/70">
+            <div class="faq-help-box">
+              <strong>Steps:</strong>
+              <ol>
+                <li>Open <b>Campus Life</b> and go to <b>Lost &amp; Found</b>.</li>
+                <li>Select <b>Report Item</b>.</li>
+                <li>Choose whether the item is <b>Lost</b> or <b>Found</b>.</li>
+                <li>Enter the item name, category, date, location and description.</li>
+                <li>Select <b>Submit Report</b>.</li>
+              </ol>
+              <p class="faq-small-note">
+                Reports you create are marked <b>My Report</b>, and only those reports can be deleted by you.
+              </p>
+              <button class="faq-go-btn" onclick="navigateToTarget('campus','lost-found-section')">
+                Go to Lost &amp; Found <i class="fas fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item border border-[#D8E2EE] rounded-xl overflow-hidden">
+          <button aria-expanded="false" class="w-full text-left p-4 flex justify-between items-center font-bold" onclick="toggleFAQ(this)">
+            How do I submit an assignment? <i class="fas fa-plus"></i>
+          </button>
+          <div class="faq-answer hidden px-4 pb-4 text-sm text-[#0F172A]/70">
+            <div class="faq-help-box">
+              <strong>Steps:</strong>
+              <ol>
+                <li>Open <b>Academic Hub → My Assignments</b>.</li>
+                <li>Select <b>Submit Assignment</b>.</li>
+                <li>Add one or more PDF, DOCX, PPTX or ZIP files.</li>
+                <li>Remove any incorrect file before submitting if needed.</li>
+                <li>Select <b>Submit Assignment</b> to save your submission.</li>
+              </ol>
+              <p class="faq-small-note">
+                If a result has already been graded as P, M or D, the submission becomes read-only.
+              </p>
+              <button class="faq-go-btn" onclick="navigateToTarget('academic','assignment-submission-section')">
+                Go to My Assignments <i class="fas fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item border border-[#D8E2EE] rounded-xl overflow-hidden">
+          <button aria-expanded="false" class="w-full text-left p-4 flex justify-between items-center font-bold" onclick="toggleFAQ(this)">
+            Who can I contact for general enquiries? <i class="fas fa-plus"></i>
+          </button>
+          <div class="faq-answer hidden px-4 pb-4 text-sm text-[#0F172A]/70">
+            <div class="faq-help-box">
+              <p>
+                Use <b>General Enquiries</b> for questions that do not belong to a specific module or service.
+                You can also contact student support at <b>09-979387111</b>.
+              </p>
+              <button class="faq-go-btn" onclick="selectSupportService('General Enquiries')">
+                Open General Enquiries <i class="fas fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="bg-[#0F172A] text-white mt-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid md:grid-cols-4 gap-8 mb-8">
+      <div>
+        <div class="flex items-center gap-2.5 mb-4">
+          <div class="gk-logo-symbol gk-logo-symbol-footer" aria-hidden="true">
+            <i class="fas fa-book-open"></i>
+          </div>
+          <span class="gk-wordmark gk-wordmark-footer"><span class="gk-wordmark-main">Gusto</span><span class="gk-wordmark-hub">Hub</span></span>
+        </div>
+        <p class="text-sm text-white/60 font-medium">Learning, school updates and student support in one simple place.</p>
+      </div>
+      <div>
+        <div class="font-display text-sm mb-3 text-[#84CC16]">EXPLORE</div>
+        <ul class="space-y-2 text-sm text-white/70">
+          <li><a href="#" onclick="navigate('dashboard');return false;" class="hover:text-[#FCD34D]">Dashboard</a></li>
+          <li><a href="#" onclick="navigate('academic');return false;" class="hover:text-[#FCD34D]">Academic Hub</a></li>
+          <li><a href="#" onclick="navigate('campus');return false;" class="hover:text-[#FCD34D]">Campus Life</a></li>
+          <li><a href="#" onclick="navigate('support');return false;" class="hover:text-[#FCD34D]">Student Support</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="font-display text-sm mb-3 text-[#84CC16]">SUPPORT</div>
+        <ul class="space-y-2 text-sm text-white/70">
+          <li><a href="support.html" class="hover:text-[#FCD34D]">Help Center</a></li>
+          <li><a href="support.html#quick-appointment" class="hover:text-[#FCD34D]">Contact IT</a></li>
+          <li><a href="support.html#quick-appointment" class="hover:text-[#FCD34D]">Report a Bug</a></li>
+          <li><a href="profile.html#settings-panel" class="hover:text-[#FCD34D]">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="font-display text-sm mb-3 text-[#84CC16]">CONNECT</div>
+        <div class="flex gap-2">
+          <a href="https://www.facebook.com/share/1HYTGQx1eL/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="social-link-btn" aria-label="Facebook" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.tiktok.com/@leon0367?_r=1&amp;_t=ZS-98neEgLvcmL" target="_blank" rel="noopener noreferrer" class="social-link-btn" aria-label="TikTok" title="TikTok"><i class="fab fa-tiktok"></i></a>
+          <a href="https://discord.gg/heuKQQhHJ" target="_blank" rel="noopener noreferrer" class="social-link-btn" aria-label="Discord" title="Discord"><i class="fab fa-discord"></i></a>
+          <a href="https://t.me/+2sJLpz_HunYzYjc1" target="_blank" rel="noopener noreferrer" class="social-link-btn" aria-label="Telegram" title="Telegram"><i class="fab fa-telegram-plane"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="pt-6 border-t-2 border-white/20 flex justify-between flex-wrap gap-2 text-xs font-mono text-white/50">
+      <span>© 2026 GUSTOHUB · SCHOOL STUDENT PORTAL</span>
+      <span>v2.4.1 · ALL SYSTEMS OPERATIONAL</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Modal & Toast containers -->
+<div id="modal-root"></div>
+<div id="toast-root" class="fixed top-20 right-4 z-[100] space-y-2 pointer-events-none"></div>
+
+<script src="js/main.js"></script>
+</body>
+</html>

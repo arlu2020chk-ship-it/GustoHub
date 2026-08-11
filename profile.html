@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GustoHub — Profile & Settings</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+<script src="js/auth.js"></script>
+</head>
+<body class="overflow-x-hidden" data-page="profile">
+
+<!-- Split from the original Message 2 prototype. Visual design/content kept intact. -->
+<nav class="glass-nav sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <a href="#" class="flex items-center gap-2.5" onclick="navigate('dashboard');return false;">
+        <div class="gk-logo-symbol" aria-hidden="true">
+          <i class="fas fa-book-open"></i>
+        </div>
+        <span class="gk-wordmark"><span class="gk-wordmark-main">Gusto</span><span class="gk-wordmark-hub">Hub</span></span>
+      </a>
+      <div class="hidden lg:flex items-center gap-1">
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="dashboard" onclick="navigate('dashboard')">Dashboard</button>
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="academic" onclick="navigate('academic')">Academic</button>
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="ai" onclick="navigate('ai')">AI Assistant</button>
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="campus" onclick="navigate('campus')">Campus Life</button>
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="support" onclick="navigate('support')">Support</button>
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="profile" onclick="navigate('profile')">Profile</button>
+      </div>
+      <div class="flex items-center gap-3">
+        <button class="hidden md:flex items-center gap-2 brutal-sm bg-white px-3 py-1.5 text-sm" onclick="openNotifications()">
+          <i class="fas fa-bell"></i>
+          <span class="notification-count bg-[#EC4899] text-white text-xs px-1.5 py-0.5 border-2 border-[#0F172A] font-bold">3</span>
+        </button>
+        <button class="hidden md:flex items-center gap-2 logout-btn px-3 py-2 text-sm font-semibold" onclick="gustoHubLogout()" title="Log out">
+          <i class="fas fa-right-from-bracket"></i>
+          <span>Logout</span>
+        </button>
+        <div class="top-profile-avatar cursor-pointer" onclick="navigate('profile')" title="Profile">
+          <span class="top-profile-initials">ST</span>
+        </div>
+        <button class="lg:hidden brutal-sm bg-[#FCD34D] p-2.5" onclick="toggleMobileNav()" aria-label="menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+    <div id="mobileNav" class="hidden lg:hidden pb-4 space-y-2">
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('dashboard');toggleMobileNav()">Dashboard</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('academic');toggleMobileNav()">Academic Hub</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('ai');toggleMobileNav()">AI Assistant</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('campus');toggleMobileNav()">Campus Life</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('support');toggleMobileNav()">Student Support</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('profile');toggleMobileNav()">Profile</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="gustoHubLogout()">Logout</button>
+    </div>
+  </div>
+</nav>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+<!-- ==================== PAGE 5: MY PROFILE ==================== -->
+<section id="page-profile" class="page active">
+  <div class="mb-8">
+    <div class="section-tag mb-3">MY PROFILE</div>
+    <h1 class="font-display text-4xl md:text-5xl mb-3">STUDENT ACCOUNT</h1>
+    <p class="text-base text-[#0F172A]/70">Manage your student information and portal preferences.</p>
+  </div>
+
+  <div class="grid lg:grid-cols-3 gap-6 mb-8">
+    <div class="brutal bg-[#183A57] text-white p-6">
+      <div class="flex flex-col items-center text-center">
+        <div class="relative mb-4">
+          <div id="profile-avatar" class="w-28 h-28 bg-[#EAF3FF] flex items-center justify-center">
+            <img id="profile-avatar-image" class="profile-main-photo hidden" alt="Profile photo">
+            <span id="profile-initials" class="font-display text-4xl text-[#1E5AA8]">ST</span>
+          </div>
+          <button class="absolute -bottom-2 -right-2 bg-white text-[#1E5AA8] w-8 h-8 rounded-lg flex items-center justify-center" onclick="triggerProfilePhotoUpload()">
+            <i class="fas fa-camera text-xs"></i>
+          </button>
+          <input id="profile-photo-input" type="file" accept="image/*" class="hidden" onchange="handleProfilePhoto(event)">
+        </div>
+        <div id="profile-card-name" class="font-display text-2xl">STUDENT</div>
+        <div id="profile-card-handle" class="font-mono text-sm text-[#72D6A4] mt-1">@GK001</div>
+        <div class="text-sm text-white/70 mt-2">HND in Computing</div>
+      </div>
+
+      <div class="mt-6 pt-5 border-t border-white/20 grid grid-cols-3 gap-2 text-center">
+        <div><div class="font-display text-2xl text-[#72D6A4]">94%</div><div class="text-xs text-white/60">ATTENDANCE</div></div>
+        <div><div class="font-display text-2xl text-[#F2C94C]">7</div><div class="text-xs text-white/60">SUBMITTED</div></div>
+        <div><div class="font-display text-2xl text-white">3</div><div class="text-xs text-white/60">PENDING</div></div>
+      </div>
+
+      <button class="btn-brutal bg-white text-[#183A57] w-full py-2.5 mt-5 text-sm" onclick="startProfileEdit()">Edit Profile</button>
+    </div>
+
+    <div id="settings-panel" class="lg:col-span-2 brutal bg-white p-6">
+      <div class="flex items-center justify-between mb-5 flex-wrap gap-3">
+        <div>
+          <div class="font-mono text-xs text-[#0F172A]/60 mb-1">ACCOUNT SETTINGS</div>
+          <h2 class="font-display text-3xl">SETTINGS</h2>
+        </div>
+        <div class="flex gap-1 flex-wrap" id="settings-tabs">
+          <button class="filter-tag active px-3 py-1.5" data-tab="account">Account</button>
+          <button class="filter-tag px-3 py-1.5" data-tab="notif">Notifications</button>
+          <button class="filter-tag px-3 py-1.5" data-tab="privacy">Privacy</button>
+          <button class="filter-tag px-3 py-1.5" data-tab="appear">Appearance</button>
+        </div>
+      </div>
+
+      <div id="tab-account" class="settings-tab">
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label class="font-mono text-xs uppercase text-[#0F172A]/60 block mb-2">Full Name</label>
+            <input id="profile-full-name" type="text" value="" placeholder="Enter your full name" class="w-full px-3 py-2.5 font-bold">
+          </div>
+          <div>
+            <label class="font-mono text-xs uppercase text-[#0F172A]/60 block mb-2">Student ID</label>
+            <input id="profile-student-id" type="text" value="" disabled class="w-full px-3 py-2.5 font-mono bg-[#F2F5F8]">
+          </div>
+          <div>
+            <label class="font-mono text-xs uppercase text-[#0F172A]/60 block mb-2">Email</label>
+            <input id="profile-email" type="email" value="" placeholder="Enter your email" class="w-full px-3 py-2.5 font-bold">
+          </div>
+          <div>
+            <label class="font-mono text-xs uppercase text-[#0F172A]/60 block mb-2">Phone</label>
+            <input id="profile-phone" type="tel" value="" placeholder="Enter your phone number" class="w-full px-3 py-2.5 font-bold">
+          </div>
+        </div>
+        <button class="btn-brutal bg-[#1E5AA8] text-white px-5 py-2.5 mt-5 text-sm" onclick="saveProfile()">Save Changes</button>
+      </div>
+
+      <div id="tab-notif" class="settings-tab hidden">
+        <div class="space-y-3">
+          <label class="setting-row"><div><div class="font-bold">Class reminders</div><div class="text-xs text-[#0F172A]/60">Reminder before scheduled classes</div></div><input type="checkbox" checked data-pref="classReminders"></label>
+          <label class="setting-row"><div><div class="font-bold">Assignment deadlines</div><div class="text-xs text-[#0F172A]/60">Deadline reminders for current assignments</div></div><input type="checkbox" checked data-pref="assignmentDeadlines"></label>
+          <label class="setting-row"><div><div class="font-bold">Lost & Found matches</div><div class="text-xs text-[#0F172A]/60">Updates related to your reports</div></div><input type="checkbox" checked data-pref="lostFoundMatches"></label>
+          <label class="setting-row"><div><div class="font-bold">Campus notices</div><div class="text-xs text-[#0F172A]/60">Gusto events and notices</div></div><input type="checkbox" data-pref="campusBuzzDigest"></label>
+          <label class="setting-row"><div><div class="font-bold">Important notices</div><div class="text-xs text-[#0F172A]/60">Important student announcements</div></div><input type="checkbox" checked data-pref="urgentNotices"></label>
+        </div>
+      </div>
+
+      <div id="tab-privacy" class="settings-tab hidden">
+        <div class="space-y-4">
+          <div>
+            <div class="font-bold mb-2">Profile visibility</div>
+            <div class="flex gap-2 flex-wrap">
+              <button class="filter-tag active px-3 py-1.5 visibility-choice" data-visibility="public" onclick="setProfileVisibility(this)">Students</button>
+              <button class="filter-tag px-3 py-1.5 visibility-choice" data-visibility="private" onclick="setProfileVisibility(this)">Private</button>
+            </div>
+          </div>
+          <label class="setting-row"><div><div class="font-bold">Two-factor authentication</div><div class="text-xs text-[#0F172A]/60">Extra security for login</div></div><input type="checkbox" checked data-pref="twoFactor"></label>
+          <label class="setting-row"><div><div class="font-bold">Lost & Found notifications</div><div class="text-xs text-[#0F172A]/60">Allow matching report notifications</div></div><input type="checkbox" data-pref="shareLocation"></label>
+        </div>
+      </div>
+
+      <div id="tab-appear" class="settings-tab hidden">
+        <div class="space-y-4">
+          <div>
+            <div class="font-bold mb-2">Theme</div>
+            <div class="grid grid-cols-3 gap-2">
+              <button class="theme-choice appearance-card" data-theme="cream" onclick="applyTheme('cream', this)">Light</button>
+              <button class="theme-choice appearance-card" data-theme="white" onclick="applyTheme('white', this)">White</button>
+              <button class="theme-choice appearance-card dark-choice" data-theme="dark" onclick="applyTheme('dark', this)">Dark</button>
+            </div>
+          </div>
+          <label class="setting-row"><div><div class="font-bold">Reduce motion</div><div class="text-xs text-[#0F172A]/60">Minimize interface animation</div></div><input id="reduce-motion" type="checkbox" onchange="toggleReduceMotion(this.checked)"></label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid lg:grid-cols-2 gap-6">
+    <div class="brutal bg-white p-6">
+      <div class="font-mono text-xs text-[#0F172A]/60 mb-1">RECENT ACTIVITY</div>
+      <h2 class="font-display text-2xl mb-4">STUDENT ACTIVITY</h2>
+      <div class="space-y-4">
+        <div class="activity-row"><i class="fas fa-file-arrow-up"></i><div><div class="font-bold">Submitted assignment</div><div class="text-xs text-[#0F172A]/60">Academic Hub</div></div></div>
+        <div class="activity-row"><i class="fas fa-book-open"></i><div><div class="font-bold">Downloaded lecture notes</div><div class="text-xs text-[#0F172A]/60">Learning Materials</div></div></div>
+        <div class="activity-row"><i class="fas fa-magnifying-glass"></i><div><div class="font-bold">Checked Lost & Found</div><div class="text-xs text-[#0F172A]/60">Campus Life</div></div></div>
+        <div class="activity-row"><i class="fas fa-calendar-check"></i><div><div class="font-bold">Viewed timetable</div><div class="text-xs text-[#0F172A]/60">Dashboard</div></div></div>
+      </div>
+    </div>
+
+    <div class="brutal bg-white p-6">
+      <div class="font-mono text-xs text-[#0F172A]/60 mb-1">ACADEMIC SUMMARY</div>
+      <h2 class="font-display text-2xl mb-4">CURRENT PROGRESS</h2>
+      <div class="space-y-4">
+        <div class="summary-line"><span>Attendance</span><strong>94%</strong></div>
+        <div class="summary-line"><span>Current Modules</span><strong>4</strong></div>
+        <div class="summary-line"><span>Submitted Assignments</span><strong>7</strong></div>
+        <div class="summary-line"><span>Assignments Due</span><strong>3</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="bg-[#0F172A] text-white mt-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid md:grid-cols-4 gap-8 mb-8">
+      <div>
+        <div class="flex items-center gap-2.5 mb-4">
+          <div class="gk-logo-symbol gk-logo-symbol-footer" aria-hidden="true">
+            <i class="fas fa-book-open"></i>
+          </div>
+          <span class="gk-wordmark gk-wordmark-footer"><span class="gk-wordmark-main">Gusto</span><span class="gk-wordmark-hub">Hub</span></span>
+        </div>
+        <p class="text-sm text-white/60 font-medium">Learning, school updates and student support in one simple place.</p>
+      </div>
+      <div>
+        <div class="font-display text-sm mb-3 text-[#84CC16]">EXPLORE</div>
+        <ul class="space-y-2 text-sm text-white/70">
+          <li><a href="#" onclick="navigate('dashboard');return false;" class="hover:text-[#FCD34D]">Dashboard</a></li>
+          <li><a href="#" onclick="navigate('academic');return false;" class="hover:text-[#FCD34D]">Academic Hub</a></li>
+          <li><a href="#" onclick="navigate('campus');return false;" class="hover:text-[#FCD34D]">Campus Life</a></li>
+          <li><a href="#" onclick="navigate('support');return false;" class="hover:text-[#FCD34D]">Student Support</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="font-display text-sm mb-3 text-[#84CC16]">SUPPORT</div>
+        <ul class="space-y-2 text-sm text-white/70">
+          <li><a href="support.html" class="hover:text-[#FCD34D]">Help Center</a></li>
+          <li><a href="support.html#quick-appointment" class="hover:text-[#FCD34D]">Contact IT</a></li>
+          <li><a href="support.html#quick-appointment" class="hover:text-[#FCD34D]">Report a Bug</a></li>
+          <li><a href="profile.html#settings-panel" class="hover:text-[#FCD34D]">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="font-display text-sm mb-3 text-[#84CC16]">CONNECT</div>
+        <div class="flex gap-2">
+          <a href="https://www.facebook.com/share/1HYTGQx1eL/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="social-link-btn" aria-label="Facebook" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.tiktok.com/@leon0367?_r=1&amp;_t=ZS-98neEgLvcmL" target="_blank" rel="noopener noreferrer" class="social-link-btn" aria-label="TikTok" title="TikTok"><i class="fab fa-tiktok"></i></a>
+          <a href="https://discord.gg/heuKQQhHJ" target="_blank" rel="noopener noreferrer" class="social-link-btn" aria-label="Discord" title="Discord"><i class="fab fa-discord"></i></a>
+          <a href="https://t.me/+2sJLpz_HunYzYjc1" target="_blank" rel="noopener noreferrer" class="social-link-btn" aria-label="Telegram" title="Telegram"><i class="fab fa-telegram-plane"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="pt-6 border-t-2 border-white/20 flex justify-between flex-wrap gap-2 text-xs font-mono text-white/50">
+      <span>© 2026 GUSTOHUB · SCHOOL STUDENT PORTAL</span>
+      <span>v2.4.1 · ALL SYSTEMS OPERATIONAL</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Modal & Toast containers -->
+<div id="modal-root"></div>
+<div id="toast-root" class="fixed top-20 right-4 z-[100] space-y-2 pointer-events-none"></div>
+
+<script src="js/main.js"></script>
+</body>
+</html>

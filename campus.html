@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GustoHub — Campus Life</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+<script src="js/auth.js"></script>
+</head>
+<body class="overflow-x-hidden" data-page="campus">
+
+<!-- Split from the original Message 2 prototype. Visual design/content kept intact. -->
+<nav class="glass-nav sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <a href="#" class="flex items-center gap-2.5" onclick="navigate('dashboard');return false;">
+        <div class="gk-logo-symbol" aria-hidden="true">
+          <i class="fas fa-book-open"></i>
+        </div>
+        <span class="gk-wordmark"><span class="gk-wordmark-main">Gusto</span><span class="gk-wordmark-hub">Hub</span></span>
+      </a>
+      <div class="hidden lg:flex items-center gap-1">
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="dashboard" onclick="navigate('dashboard')">Dashboard</button>
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="academic" onclick="navigate('academic')">Academic</button>
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="ai" onclick="navigate('ai')">AI Assistant</button>
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="campus" onclick="navigate('campus')">Campus Life</button>
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="support" onclick="navigate('support')">Support</button>
+        <button class="nav-link px-4 py-2 font-bold text-sm uppercase tracking-wide" data-page="profile" onclick="navigate('profile')">Profile</button>
+      </div>
+      <div class="flex items-center gap-3">
+        <button class="hidden md:flex items-center gap-2 brutal-sm bg-white px-3 py-1.5 text-sm" onclick="openNotifications()">
+          <i class="fas fa-bell"></i>
+          <span class="notification-count bg-[#EC4899] text-white text-xs px-1.5 py-0.5 border-2 border-[#0F172A] font-bold">3</span>
+        </button>
+        <button class="hidden md:flex items-center gap-2 logout-btn px-3 py-2 text-sm font-semibold" onclick="gustoHubLogout()" title="Log out">
+          <i class="fas fa-right-from-bracket"></i>
+          <span>Logout</span>
+        </button>
+        <div class="top-profile-avatar cursor-pointer" onclick="navigate('profile')" title="Profile">
+          <span class="top-profile-initials">ST</span>
+        </div>
+        <button class="lg:hidden brutal-sm bg-[#FCD34D] p-2.5" onclick="toggleMobileNav()" aria-label="menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+    <div id="mobileNav" class="hidden lg:hidden pb-4 space-y-2">
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('dashboard');toggleMobileNav()">Dashboard</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('academic');toggleMobileNav()">Academic Hub</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('ai');toggleMobileNav()">AI Assistant</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('campus');toggleMobileNav()">Campus Life</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('support');toggleMobileNav()">Student Support</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="navigate('profile');toggleMobileNav()">Profile</button>
+      <button class="nav-link w-full text-left px-4 py-2.5 font-bold uppercase" onclick="gustoHubLogout()">Logout</button>
+    </div>
+  </div>
+</nav>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+<!-- ==================== PAGE 3: CAMPUS LIFE ==================== -->
+<section id="page-campus" class="page active">
+  <div class="mb-8">
+    <div class="section-tag mb-3">CAMPUS LIFE</div>
+    <h1 class="font-display text-4xl md:text-5xl mb-3">GUSTO CAMPUS</h1>
+    <p class="text-base md:text-lg text-[#0F172A]/70 max-w-3xl font-medium">
+      Check Lost & Found, student activities, Gusto events and important notices.
+    </p>
+  </div>
+
+  <div id="lost-found-section" class="brutal-static bg-white p-6 mb-10">
+    <div class="flex items-start justify-between flex-wrap gap-4 mb-6">
+      <div>
+        <div class="font-mono text-xs text-[#0F172A]/60 mb-1">LOST & FOUND</div>
+        <h2 class="font-display text-3xl">LOST & FOUND</h2>
+        <p class="text-sm text-[#0F172A]/70 mt-2">Browse student reports or report a new item. Active items: <span id="item-count" class="font-bold">8</span></p>
+      </div>
+      <button class="btn-brutal bg-[#1E5AA8] text-white px-5 py-3 flex items-center gap-2" onclick="openReportModal()">
+        <i class="fas fa-plus"></i> Report Item
+      </button>
+    </div>
+
+    <div class="flex flex-wrap gap-2 mb-6" id="lf-filters">
+      <button class="filter-tag active px-4 py-2" data-lf-filter="all">All <span class="ml-1 opacity-60">(8)</span></button>
+      <button class="filter-tag px-4 py-2" data-lf-filter="lost">Lost <span class="ml-1 opacity-60">(3)</span></button>
+      <button class="filter-tag px-4 py-2" data-lf-filter="found">Found <span class="ml-1 opacity-60">(4)</span></button>
+      <button class="filter-tag px-4 py-2" data-lf-filter="claimed">Claimed <span class="ml-1 opacity-60">(1)</span></button>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4" id="lf-grid"></div>
+  </div>
+
+  <div id="campus-updates-section" class="mb-10">
+    <div class="flex items-end justify-between flex-wrap gap-3 mb-6">
+      <div>
+        <div class="section-tag mb-3">GUSTO UPDATES</div>
+        <h2 class="font-display text-3xl md:text-4xl">CAMPUS UPDATES</h2>
+      </div>
+      <div class="flex gap-2" id="buzz-filters">
+        <button class="filter-tag active px-3 py-1.5" data-buzz-filter="all">All</button>
+        <button class="filter-tag px-3 py-1.5" data-buzz-filter="event">Events</button>
+        <button class="filter-tag px-3 py-1.5" data-buzz-filter="club">Student Activities</button>
+        <button class="filter-tag px-3 py-1.5" data-buzz-filter="notice">Notices</button>
+      </div>
+    </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5" id="buzz-grid"></div>
+  </div>
+
+  <div>
+    <div class="section-tag mb-3">QUICK ACCESS</div>
+    <h2 class="font-display text-3xl mb-5">STUDENT SERVICES</h2>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+      <button class="service-quick-card" onclick="openCampusService('LMS')"><i class="fas fa-laptop-file"></i><span>Gusto LMS</span></button>
+      <button class="service-quick-card" onclick="openCampusService('Library')"><i class="fas fa-book-open"></i><span>Library</span></button>
+      <button class="service-quick-card" onclick="openCampusService('IT')"><i class="fas fa-laptop-code"></i><span>IT Help</span></button>
+      <button class="service-quick-card" onclick="openCampusService('Student Services')"><i class="fas fa-id-card"></i><span>Student Services</span></button>
+      <button class="service-quick-card" onclick="openCampusService('Timetable')"><i class="fas fa-calendar-days"></i><span>Timetable</span></button>
+      <button class="service-quick-card" onclick="openCampusService('Enquiry')"><i class="fas fa-circle-question"></i><span>Enquiry</span></button>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="bg-[#0F172A] text-white mt-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid md:grid-cols-4 gap-8 mb-8">
+      <div>
+        <div class="flex items-center gap-2.5 mb-4">
+          <div class="gk-logo-symbol gk-logo-symbol-footer" aria-hidden="true">
+            <i class="fas fa-book-open"></i>
+          </div>
+          <span class="gk-wordmark gk-wordmark-footer"><span class="gk-wordmark-main">Gusto</span><span class="gk-wordmark-hub">Hub</span></span>
+        </div>
+        <p class="text-sm text-white/60 font-medium">Learning, school updates and student support in one simple place.</p>
+      </div>
+      <div>
+        <div class="font-display text-sm mb-3 text-[#84CC16]">EXPLORE</div>
+        <ul class="space-y-2 text-sm text-white/70">
+          <li><a href="#" onclick="navigate('dashboard');return false;" class="hover:text-[#FCD34D]">Dashboard</a></li>
+          <li><a href="#" onclick="navigate('academic');return false;" class="hover:text-[#FCD34D]">Academic Hub</a></li>
+          <li><a href="#" onclick="navigate('campus');return false;" class="hover:text-[#FCD34D]">Campus Life</a></li>
+          <li><a href="#" onclick="navigate('support');return false;" class="hover:text-[#FCD34D]">Student Support</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="font-display text-sm mb-3 text-[#84CC16]">SUPPORT</div>
+        <ul class="space-y-2 text-sm text-white/70">
+          <li><a href="support.html" class="hover:text-[#FCD34D]">Help Center</a></li>
+          <li><a href="support.html#quick-appointment" class="hover:text-[#FCD34D]">Contact IT</a></li>
+          <li><a href="support.html#quick-appointment" class="hover:text-[#FCD34D]">Report a Bug</a></li>
+          <li><a href="profile.html#settings-panel" class="hover:text-[#FCD34D]">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="font-display text-sm mb-3 text-[#84CC16]">CONNECT</div>
+        <div class="flex gap-2">
+          <a href="https://www.facebook.com/share/1HYTGQx1eL/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="social-link-btn" aria-label="Facebook" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.tiktok.com/@leon0367?_r=1&amp;_t=ZS-98neEgLvcmL" target="_blank" rel="noopener noreferrer" class="social-link-btn" aria-label="TikTok" title="TikTok"><i class="fab fa-tiktok"></i></a>
+          <a href="https://discord.gg/heuKQQhHJ" target="_blank" rel="noopener noreferrer" class="social-link-btn" aria-label="Discord" title="Discord"><i class="fab fa-discord"></i></a>
+          <a href="https://t.me/+2sJLpz_HunYzYjc1" target="_blank" rel="noopener noreferrer" class="social-link-btn" aria-label="Telegram" title="Telegram"><i class="fab fa-telegram-plane"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="pt-6 border-t-2 border-white/20 flex justify-between flex-wrap gap-2 text-xs font-mono text-white/50">
+      <span>© 2026 GUSTOHUB · SCHOOL STUDENT PORTAL</span>
+      <span>v2.4.1 · ALL SYSTEMS OPERATIONAL</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Modal & Toast containers -->
+<div id="modal-root"></div>
+<div id="toast-root" class="fixed top-20 right-4 z-[100] space-y-2 pointer-events-none"></div>
+
+<script src="js/main.js"></script>
+</body>
+</html>
